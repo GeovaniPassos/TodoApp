@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author Geovani-PC
  */
-public class tasks {
+public class Task {
     
     private int id;
     private int idProject;
@@ -23,7 +23,7 @@ public class tasks {
     private Date createdAt;
     private Date updateAt;
 
-    public tasks(int id, int idProject, String name, String description, String notes, boolean isCompleted, Date deadline, Date createdAt, Date updateAt) {
+    public Task(int id, int idProject, String name, String description, String notes, boolean isCompleted, Date deadline, Date createdAt, Date updateAt) {
         this.id = id;
         this.idProject = idProject;
         this.name = name;
@@ -33,6 +33,11 @@ public class tasks {
         this.deadline = deadline;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
+    }
+    
+    public Task(){
+        this.createdAt = new Date();
+        
     }
 
     public int getId() {
@@ -109,7 +114,7 @@ public class tasks {
 
     @Override
     public String toString() {
-        return "tasks{" + "id=" + id + ", idProject=" + idProject + ", name=" + name + ", description=" + description + ", notes=" + notes + ", isCompleted=" + isCompleted + ", deadline=" + deadline + ", createdAt=" + createdAt + ", updateAt=" + updateAt + '}';
+        return "Task{" + "id=" + id + ", idProject=" + idProject + ", name=" + name + ", description=" + description + ", notes=" + notes + ", isCompleted=" + isCompleted + ", deadline=" + deadline + ", createdAt=" + createdAt + ", updateAt=" + updateAt + '}';
     }
     
     
