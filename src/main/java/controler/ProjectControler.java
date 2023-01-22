@@ -41,11 +41,10 @@ public class ProjectControler {
             statement.setDate(4, new Date(project.getUpdatedAt().getTime()));
             statement.execute();            
             
-        } catch (Exception ex) {
-            throw new RuntimeException("Erro ao salvar projeto "
-                    + ex.getMessage(), ex);
+        } catch (SQLException ex) {
+            throw new RuntimeException("Erro ao salvar projeto ", ex);
         } finally {
-            ConnectionFactory.closeConnection(connection);
+            ConnectionFactory.closeConnection(connection, statement);
         }
     }
     
@@ -73,12 +72,13 @@ public class ProjectControler {
             statement.execute();
             
         } catch (Exception ex) {
-            throw new RuntimeException("Erro ao atualizar o projeto " 
-                    + ex.getMessage(), ex);
+            throw new RuntimeException("Erro ao atualizar o projeto ", ex);
+        } finally {
+            ConnectionFactory.closeConnection(connection, statement);
         }
     }
     
-    public void removeById(int projectId) throws SQLException{
+    public void removeById(int idProject){
         
         String sql = "DELETE FROM projects WHERE id = ?";
         
@@ -89,17 +89,17 @@ public class ProjectControler {
             connection = ConnectionFactory.getConnection();
             statement = connection.prepareStatement(sql);
             
-            statement.setInt(1, projectId);
+            statement.setInt(1, idProject);
             statement.execute();
             
         } catch (Exception ex) {
-            throw new SQLException("Erro ao deletar o projeto ");
+            throw new RuntimeException("Erro ao deletar o projeto ", ex);
         } finally {
-            ConnectionFactory.closeConnection(connection);
+            ConnectionFactory.closeConnection(connection, statement);
         }
     }
     
-    public List<Project> getAll(int id){
+    public List<Project> getAll(){
         
         String sql = "SELECT * FROM projects WHERE id = ?";
         
@@ -107,19 +107,19 @@ public class ProjectControler {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         
-        List<Project> projects = new ArrayList<Project>();
+        List<Project> projects = new ArrayList<>();
         
         try {
             
             connection = ConnectionFactory.getConnection();
             statement = connection.prepareStatement(sql);
             
-            statement.setInt(1, id);
             resultSet = statement.executeQuery();
             
             while (resultSet.next()){
                 
                 Project project = new Project();
+                
                 project.setId(resultSet.getInt("id"));
                 project.setName(resultSet.getString("name"));
                 project.setDescription(resultSet.getString("description"));
@@ -130,10 +130,9 @@ public class ProjectControler {
             }
             
         } catch (Exception ex) {
-            throw new RuntimeException("Erro em atualizar atualizar" 
-                    + ex.getMessage(), ex);
+            throw new RuntimeException("Erro em atualizar atualizar", ex);
         } finally {
-            ConnectionFactory.closeConnection(connection, statement);
+            ConnectionFactory.closeConnection(connection, statement, resultSet);
         }
         
         return projects;
