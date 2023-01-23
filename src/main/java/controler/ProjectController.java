@@ -19,14 +19,14 @@ import util.ConnectionFactory;
  *
  * @author Geovani-PC
  */
-public class ProjectControler {
+public class ProjectController {
     
     public void save(Project project){
         
         String sql = "INSERT INTO projects(name,"
                 + " description, "
                 + "createdAt, "
-                + "updateAt) VALUE(?,?,?,?)";
+                + "updatedAt) VALUE(?,?,?,?)";
         
         Connection connection = null;
         PreparedStatement statement = null;
@@ -101,7 +101,7 @@ public class ProjectControler {
     
     public List<Project> getAll(){
         
-        String sql = "SELECT * FROM projects WHERE id = ?";
+        String sql = "SELECT * FROM projects";
         
         Connection connection = null;
         PreparedStatement statement = null;
@@ -125,7 +125,7 @@ public class ProjectControler {
                 project.setDescription(resultSet.getString("description"));
                 project.setCreatedAt(resultSet.getDate("createdAt"));
                 project.setUpdatedAt(resultSet.getDate("updatedAt"));
-                project.add(project);
+                projects.add(project);
                 
             }
             

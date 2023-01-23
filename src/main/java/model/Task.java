@@ -23,7 +23,8 @@ public class Task {
     private Date createdAt;
     private Date updatedAt;
 
-    public Task(int id, int idProject, String name, String description, String notes, boolean isCompleted, Date deadline, Date createdAt, Date updatedAt) {
+    public Task(int id, int idProject, String name, String description, 
+            String notes, boolean isCompleted, Date deadline, Date createdAt, Date updatedAt) {
         this.id = id;
         this.idProject = idProject;
         this.name = name;
@@ -114,7 +115,10 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" + "id=" + id + ", idProject=" + idProject + ", name=" + name + ", description=" + description + ", notes=" + notes + ", isCompleted=" + isCompleted + ", deadline=" + deadline + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + '}';
+        return "Task{" + "id=" + id + ", idProject=" + idProject + ", name=" 
+                + name + ", description=" + description + ", notes=" + notes + 
+                ", isCompleted=" + isCompleted + ", deadline=" + deadline + 
+                ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + '}';
     }
     
     

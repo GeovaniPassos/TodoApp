@@ -19,7 +19,7 @@ import util.ConnectionFactory;
  *
  * @author Geovani-PC
  */
-public class TaskControler {
+public class TaskController {
     
     public void save(Task task) {
        
