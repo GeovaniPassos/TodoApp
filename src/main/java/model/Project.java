@@ -19,8 +19,7 @@ public class Project {
     private Date createdAt;
     private Date updatedAt;
 
-    public Project(int id, String name, String description, Date createdAt, Date
-            updatedAt) {
+    public Project(int id, String name, String description, Date createdAt, Date updatedAt) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -28,11 +27,11 @@ public class Project {
         this.updatedAt = updatedAt;
     }
 
-    public Project(){
-        this.createdAt = new Date();
+    public Project() {
+       this.createdAt = new Date();
+       this.updatedAt = new Date();
     }
-
-
+        
     public int getId() {
         return id;
     }

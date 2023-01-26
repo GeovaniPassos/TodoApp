@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controler;
+package controller;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -26,13 +26,16 @@ public class ProjectController {
         String sql = "INSERT INTO projects(name,"
                 + " description, "
                 + "createdAt, "
-                + "updatedAt) VALUE(?,?,?,?)";
+                + "updatedAt) "
+                + "VALUES(?,?,?,?)";
         
         Connection connection = null;
         PreparedStatement statement = null;
         
         try {
+            
             connection = ConnectionFactory.getConnection();
+            
             statement = connection.prepareStatement(sql);
             
             statement.setString(1, project.getName());
@@ -71,7 +74,7 @@ public class ProjectController {
             statement.setInt(5, project.getId());
             statement.execute();
             
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             throw new RuntimeException("Erro ao atualizar o projeto ", ex);
         } finally {
             ConnectionFactory.closeConnection(connection, statement);
@@ -103,16 +106,20 @@ public class ProjectController {
         
         String sql = "SELECT * FROM projects";
         
+        List<Project> projects = new ArrayList<>();
+        
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         
-        List<Project> projects = new ArrayList<>();
+        
         
         try {
             
             connection = ConnectionFactory.getConnection();
             statement = connection.prepareStatement(sql);
+            
+            
             
             resultSet = statement.executeQuery();
             

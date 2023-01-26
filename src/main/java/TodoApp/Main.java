@@ -5,11 +5,9 @@
  */
 package TodoApp;
 
-import controler.ProjectController;
-import java.sql.Connection;
+import controller.ProjectController;
 import java.util.List;
 import model.Project;
-import util.ConnectionFactory;
 
 
 /**
@@ -25,18 +23,27 @@ public class Main {
         // TODO code application logic here
         
         
-        ProjectController projectControler = new ProjectController();
-        
-        Project project = new Project();
-        project.setName("Projeto teste");
-        project.setDescription("descrição do novo projeto");
-        projectControler.save(project);
-        
-//        project.setName("Novo nome do projeto");
-//        projectController.save(project);
+//        ProjectController projectController = new ProjectController();
 //        
-//        List<Project> projects = projectController.getAll();
-//        System.out.println("Total de projetos = " + projects.size());
+//        Project project = new Project();
+//        project.setName("Projeto teste2");
+//        project.setDescription("descrição do novo projeto");
+//        projectController.save(project);
+        
+        ProjectController projectController = new ProjectController();
+
+
+        Project project = new Project();
+        project.setId(1);
+        project.setName("Novo nome do projeto");
+        project.setDescription("Nova descrição");
+        
+        projectController.update(project);
+        
+        List<Project> projects = projectController.getAll();
+        System.out.println("Total de projetos = " + projects.size());
+        
+        projectController.removeById(1);
     }
     
 }
