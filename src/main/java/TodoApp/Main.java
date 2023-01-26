@@ -6,8 +6,12 @@
 package TodoApp;
 
 import controller.ProjectController;
+import controller.TaskController;
+import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import model.Project;
+import model.Task;
 
 
 /**
@@ -19,7 +23,7 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         // TODO code application logic here
         
         
@@ -30,20 +34,50 @@ public class Main {
 //        project.setDescription("descrição do novo projeto");
 //        projectController.save(project);
         
-        ProjectController projectController = new ProjectController();
+//        ProjectController projectController = new ProjectController();
+//
+//
+//        Project project = new Project();
+//        project.setId(1);
+//        project.setName("Novo nome do projeto");
+//        project.setDescription("Nova descrição");
+//        
+//        projectController.update(project);
+        
+//        List<Project> projects = projectController.getAll();
+//        System.out.println("Total de projetos = " + projects.size());
+//        
+//        projectController.removeById(1);
 
+//        TaskController taskController = new TaskController();
+//        
+//        Task task = new Task();
+//        task.setIdProject(4);
+//        task.setName("Primeira tarefa");
+//        task.setDescription("Proxima tarefa a ser feita");
+//        task.setNotes("para ser feito ainda hoje");
+//        task.setIsCompleted(false);
+//        task.setDeadline(new Date());        
+//        taskController.save(task);
 
-        Project project = new Project();
-        project.setId(1);
-        project.setName("Novo nome do projeto");
-        project.setDescription("Nova descrição");
+//        TaskController taskController = new TaskController();
+//        Task task = new Task();
+//        task.setIdProject(4);
+//        task.setId(1);
+//        task.setName("atualizando a tarefa");
+//        task.setDescription("tarefa a ser feita");
+//        task.setNotes("para ser feito ja");
+//        task.setIsCompleted(true);
+//        task.setDeadline(new Date());        
+//        taskController.update(task);
         
-        projectController.update(project);
         
-        List<Project> projects = projectController.getAll();
-        System.out.println("Total de projetos = " + projects.size());
-        
-        projectController.removeById(1);
+//        taskController.removeById(1);
+
+        TaskController taskController = new TaskController();
+        List<Task> tasks = taskController.getAll(4);
+        System.out.println("Total de tarefas = " + tasks.size());
+//        
     }
     
 }

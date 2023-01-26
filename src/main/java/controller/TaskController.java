@@ -26,10 +26,10 @@ public class TaskController {
         String sql = "INSERT INTO tasks(idProject,"
                 + "name,"
                 + "description,"
-                + "complete,"
+                + "completed,"
                 + "notes,"
                 + "deadline,"
-                + "createdAt"
+                + "createdAt,"
                 + "updatedAt)VALUE(?,?,?,?,?,?,?,?)"; 
 
         Connection connection = null;
@@ -43,15 +43,15 @@ public class TaskController {
             statement.setString(2, task.getName());
             statement.setString(3,task.getDescription());
             statement.setBoolean(4, task.isIsCompleted());
-            statement.setString(5, task.getNotes());
+            statement.setString(5, task.getNotes());   
             statement.setDate(6, new Date(task.getDeadline().getTime()));
             statement.setDate(7, new Date(task.getCreatedAt().getTime()));
             statement.setDate(8, new Date(task.getUpdatedAt().getTime()));
             statement.execute();
 
-        } catch(Exception ex){
-            throw new RuntimeException("Erro ao salvar a tarefa " 
-                    + ex.getMessage(), ex);
+         } catch(Exception ex){
+            throw new RuntimeException(ex.getMessage() 
+                    + "Erro ao salvar a tarefa ", ex);
         } finally {
             ConnectionFactory.closeConnection(connection, statement);
 
@@ -64,8 +64,8 @@ public class TaskController {
                 + "idProject = ?,"
                 + "name = ?,"
                 + "description = ?,"
-                + "notes = ?,"
                 + "completed = ?,"
+                + "notes = ?,"
                 + "deadline = ?,"
                 + "createdAt = ?,"
                 + "updatedAt = ?"
@@ -85,8 +85,8 @@ public class TaskController {
             statement.setInt(1, task.getIdProject());
             statement.setString(2, task.getName());
             statement.setString(3, task.getDescription());
-            statement.setString(4, task.getNotes());
-            statement.setBoolean(5, task.isIsCompleted());
+            statement.setBoolean(4, task.isIsCompleted());
+            statement.setString(5, task.getNotes());
             statement.setDate(6, new Date(task.getDeadline().getTime()));
             statement.setDate(7, new Date(task.getCreatedAt().getTime()));
             statement.setDate(8, new Date(task.getUpdatedAt().getTime()));
@@ -120,7 +120,7 @@ public class TaskController {
             //Executando a querry
             statement.execute();
             
-        } catch (SQLException e){ 
+        } catch (Exception e){ 
             throw new SQLException("Erro ao deletar a tarefa");
         } finally {
             ConnectionFactory.closeConnection(connection, statement);
@@ -158,16 +158,15 @@ public class TaskController {
                 task.setIdProject(resultSet.getInt("idProject"));
                 task.setName(resultSet.getString("name"));
                 task.setDescription(resultSet.getString("description"));
+                task.setIsCompleted(resultSet.getBoolean("Completed"));
                 task.setNotes(resultSet.getString("notes"));
-                task.setIsCompleted(resultSet.getBoolean("isCompleted"));
                 task.setDeadline(resultSet.getDate("deadline"));
                 task.setCreatedAt(resultSet.getDate("createdAt"));
                 task.setUpdatedAt(resultSet.getDate("updatedAt"));
                 tasks.add(task);                
             
             }
-            
-            
+                
         } catch (Exception ex) {
             throw new RuntimeException("Erro em atualizar a lista" 
                     + ex.getMessage(), ex);
