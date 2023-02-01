@@ -47,10 +47,10 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaDescriptionBox = new javax.swing.JTextArea();
         jLabelDeadline = new javax.swing.JLabel();
+        jFormattedTextFieldDeadlineBox = new javax.swing.JFormattedTextField();
         jLabelNotes = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextAreaNotesBox = new javax.swing.JTextArea();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1200, 800));
@@ -66,6 +66,11 @@ public class TaskDialogScreen extends javax.swing.JDialog {
 
         jLabelTolboxCheck.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTolboxCheck.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check.png"))); // NOI18N
+        jLabelTolboxCheck.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelTolboxCheckMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelTolboxLayout = new javax.swing.GroupLayout(jPanelTolbox);
         jPanelTolbox.setLayout(jPanelTolboxLayout);
@@ -98,19 +103,24 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         jLabelDeadline.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabelDeadline.setText("Prazo");
 
+        jFormattedTextFieldDeadlineBox.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        jFormattedTextFieldDeadlineBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jFormattedTextFieldDeadlineBoxMouseClicked(evt);
+            }
+        });
+        jFormattedTextFieldDeadlineBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextFieldDeadlineBoxActionPerformed(evt);
+            }
+        });
+
         jLabelNotes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabelNotes.setText("Notas");
 
         jTextAreaNotesBox.setColumns(20);
         jTextAreaNotesBox.setRows(5);
         jScrollPane2.setViewportView(jTextAreaNotesBox);
-
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
-        jFormattedTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jFormattedTextField1MouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanelWorkspaceLayout = new javax.swing.GroupLayout(jPanelWorkspace);
         jPanelWorkspace.setLayout(jPanelWorkspaceLayout);
@@ -126,7 +136,7 @@ public class TaskDialogScreen extends javax.swing.JDialog {
                     .addComponent(jLabelDescriptionTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelNotes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelDeadline, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jFormattedTextField1))
+                    .addComponent(jFormattedTextFieldDeadlineBox))
                 .addContainerGap())
         );
         jPanelWorkspaceLayout.setVerticalGroup(
@@ -143,7 +153,7 @@ public class TaskDialogScreen extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelDeadline)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jFormattedTextFieldDeadlineBox, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelNotes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -172,24 +182,32 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jFormattedTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFormattedTextField1MouseClicked
+    private void jFormattedTextFieldDeadlineBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFormattedTextFieldDeadlineBoxMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jFormattedTextFieldDeadlineBoxMouseClicked
+
+    private void jFormattedTextFieldDeadlineBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldDeadlineBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormattedTextFieldDeadlineBoxActionPerformed
+
+    private void jLabelTolboxCheckMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTolboxCheckMouseClicked
         // TODO add your handling code here:
         try {
             Task task = new Task();
             
-            task.setIdProject(project.getId());
+            task.setIdProject(7);
             
             task.setName(jTextFieldNameBox.getText());
             task.setDescription(jTextAreaDescriptionBox.getText());
             task.setNotes(jTextAreaNotesBox.getText());
             task.setIsCompleted(false);
-
+            
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             Date deadline = null;
+            deadline = dateFormat.parse(jFormattedTextFieldDeadlineBox.getText());
+            task.setDeadline(deadline); 
             
-            deadline = dateFormat.parse(jFormattedTextField1.getText());
-            
-            task.setDeadline(deadline);
             controller.save(task);
             JOptionPane.showMessageDialog(rootPane, "Tarefa salva com sucesso!");
             
@@ -198,7 +216,8 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         }
         
         this.dispose();
-    }//GEN-LAST:event_jFormattedTextField1MouseClicked
+        
+    }//GEN-LAST:event_jLabelTolboxCheckMouseClicked
 
     /**
      * @param args the command line arguments
@@ -244,7 +263,7 @@ public class TaskDialogScreen extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextFieldDeadlineBox;
     private javax.swing.JLabel jLabelDeadline;
     private javax.swing.JLabel jLabelDescriptionTitle;
     private javax.swing.JLabel jLabelNameTitle;
