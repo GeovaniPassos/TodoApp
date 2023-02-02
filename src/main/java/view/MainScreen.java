@@ -14,6 +14,7 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import model.Project;
+import model.Task;
 import util.TaskTableModel;
 
 /**
@@ -411,7 +412,14 @@ public class MainScreen extends javax.swing.JFrame {
         
         taskModel = new TaskTableModel();
         jTableTask.setModel(taskModel);
+        loadTask();
     
+    }
+    
+    public void loadTask(){
+        List<Task> tasks = taskController.getAll(7);
+        
+        taskModel.setTasks(tasks);
     }
     
     public void loadProjects(){
