@@ -9,6 +9,9 @@ import controller.ProjectController;
 import controller.TaskController;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.List;
 import javax.swing.DefaultListModel;
 import model.Project;
 
@@ -21,7 +24,7 @@ public class MainScreen extends javax.swing.JFrame {
     ProjectController projectController;
     TaskController taskController;
     
-    DefaultListModel<Project> projecListModel;
+    DefaultListModel projectModel;
      
     
     public MainScreen() {
@@ -29,6 +32,7 @@ public class MainScreen extends javax.swing.JFrame {
         decorateTableTask();
         
         initDataController();
+        initComponentesModel();
     }
 
     /**
@@ -157,7 +161,7 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(jPanelProjectsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelProjectsTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelProjectsAdd)
                 .addContainerGap())
         );
@@ -209,11 +213,6 @@ public class MainScreen extends javax.swing.JFrame {
         jPanelProjectsList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jListProjects.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jListProjects.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jListProjects.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListProjects.setFixedCellHeight(40);
         jListProjects.setSelectionBackground(new java.awt.Color(153, 255, 153));
@@ -223,16 +222,11 @@ public class MainScreen extends javax.swing.JFrame {
         jPanelProjectsList.setLayout(jPanelProjectsListLayout);
         jPanelProjectsListLayout.setHorizontalGroup(
             jPanelProjectsListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelProjectsListLayout.createSequentialGroup()
-                .addComponent(jScrollPanelProjects)
-                .addContainerGap())
+            .addComponent(jScrollPanelProjects, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
         );
         jPanelProjectsListLayout.setVerticalGroup(
             jPanelProjectsListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelProjectsListLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPanelProjects)
-                .addContainerGap())
+            .addComponent(jScrollPanelProjects)
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -322,6 +316,11 @@ public class MainScreen extends javax.swing.JFrame {
        ProjectDialogScreen projectDialogScreen = new ProjectDialogScreen(this, rootPaneCheckingEnabled);
        projectDialogScreen.setVisible(true);
        
+       projectDialogScreen.addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent e){
+                loadProjects();
+           }
+       });
     }//GEN-LAST:event_jLabelProjectsAddMouseClicked
 
     private void jLabelTasksAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTasksAddMouseClicked
@@ -405,11 +404,25 @@ public class MainScreen extends javax.swing.JFrame {
         taskController = new TaskController();
     }
     
-    public void loadProjects(){
-        
-     
-        
+    public void initComponentesModel(){
+        projectModel = new DefaultListModel();
+        loadProjects();
+    
     }
+    
+    public void loadProjects(){
+        List<Project> projects = projectController.getAll();
+        
+        projectModel.clear();
+        
+        for (int i = 0; i < projects.size(); i++){
+            Project project = projects.get(i);
+            projectModel.addElement(project);
+        }
+        
+        jListProjects.setModel(projectModel);
+        
+    }             
     
 }
 
