@@ -14,6 +14,7 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import model.Project;
+import util.TaskTableModel;
 
 /**
  *
@@ -24,8 +25,8 @@ public class MainScreen extends javax.swing.JFrame {
     ProjectController projectController;
     TaskController taskController;
     
-    DefaultListModel projectModel;
-     
+    DefaultListModel projectsModel;
+    TaskTableModel taskModel;
     
     public MainScreen() {
         initComponents();
@@ -405,22 +406,25 @@ public class MainScreen extends javax.swing.JFrame {
     }
     
     public void initComponentesModel(){
-        projectModel = new DefaultListModel();
+        projectsModel = new DefaultListModel();
         loadProjects();
+        
+        taskModel = new TaskTableModel();
+        jTableTask.setModel(taskModel);
     
     }
     
     public void loadProjects(){
         List<Project> projects = projectController.getAll();
         
-        projectModel.clear();
+        projectsModel.clear();
         
         for (int i = 0; i < projects.size(); i++){
             Project project = projects.get(i);
-            projectModel.addElement(project);
+            projectsModel.addElement(project);
         }
         
-        jListProjects.setModel(projectModel);
+        jListProjects.setModel(projectsModel);
         
     }             
     
