@@ -263,6 +263,7 @@ public class MainScreen extends javax.swing.JFrame {
         jTableTask.setGridColor(new java.awt.Color(255, 255, 255));
         jTableTask.setRowHeight(50);
         jTableTask.setSelectionBackground(new java.awt.Color(153, 255, 153));
+        jTableTask.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTableTask.setShowVerticalLines(false);
         jScrollPane1.setViewportView(jTableTask);
 
@@ -412,12 +413,12 @@ public class MainScreen extends javax.swing.JFrame {
         
         taskModel = new TaskTableModel();
         jTableTask.setModel(taskModel);
-        loadTask();
+        loadTask(7);
     
     }
     
-    public void loadTask(){
-        List<Task> tasks = taskController.getAll(7);
+    public void loadTask(int idProject){
+        List<Task> tasks = taskController.getAll(idProject);
         
         taskModel.setTasks(tasks);
     }
