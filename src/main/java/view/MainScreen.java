@@ -15,6 +15,7 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import model.Project;
 import model.Task;
+import util.DeadlineColumnCellRenderer;
 import util.TaskTableModel;
 
 /**
@@ -31,10 +32,11 @@ public class MainScreen extends javax.swing.JFrame {
     
     public MainScreen() {
         initComponents();
-        decorateTableTask();
-        
+         
         initDataController();
         initComponentesModel();
+        
+        decorateTableTask();
     }
 
     /**
@@ -444,7 +446,10 @@ public class MainScreen extends javax.swing.JFrame {
         jTableTask.getTableHeader().setForeground(new Color(255, 255, 255));
         
         //Criando um short automatico para a caluna da tabela 
-        jTableTask.setAutoCreateRowSorter(true);
+        //jTableTask.setAutoCreateRowSorter(true);
+        
+        jTableTask.getColumnModel().getColumn(2)
+                .setCellRenderer(new DeadlineColumnCellRenderer());
     }
     
     public void initDataController(){
