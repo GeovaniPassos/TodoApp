@@ -15,6 +15,7 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import model.Project;
 import model.Task;
+import util.ButtonColumnCellRederer;
 import util.DeadlineColumnCellRenderer;
 import util.TaskTableModel;
 
@@ -450,6 +451,12 @@ public class MainScreen extends javax.swing.JFrame {
         
         jTableTask.getColumnModel().getColumn(2)
                 .setCellRenderer(new DeadlineColumnCellRenderer());
+        
+        jTableTask.getColumnModel().getColumn(4).setCellRenderer(
+                new ButtonColumnCellRederer("edit"));
+        
+        jTableTask.getColumnModel().getColumn(5).setCellRenderer(
+                new ButtonColumnCellRederer("delete"));
     }
     
     public void initDataController(){
