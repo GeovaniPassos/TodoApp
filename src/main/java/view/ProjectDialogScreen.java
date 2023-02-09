@@ -142,18 +142,28 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
         // TODO add your handling code here:
         
         try {
-            Project project = new Project();
-            project.setName(jTextFieldNameBox.getText());
-            project.setDescription(jTextAreaDescriptionBox.getText());
-            controller.save(project);
+            if (!jTextFieldNameBox.getText().equals("")){
+                Project project = new Project();
+                project.setName(jTextFieldNameBox.getText());
+                project.setDescription(jTextAreaDescriptionBox.getText());
+                controller.save(project);
+                JOptionPane.showMessageDialog(rootPane, "Projeto salvo com sucesso!");
+                this.dispose();
+                
+            } else{
+                
+                JOptionPane.showMessageDialog(rootPane, "O nome do projeto deve "
+                        + "ser preenchido!");
+            }
+                
         
-            JOptionPane.showMessageDialog(rootPane, "Projeto salvo com sucesso!");
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
             
         
-        this.dispose();
+        
     }//GEN-LAST:event_jLabelToolbarSaveMouseClicked
 
     /**
