@@ -9,10 +9,13 @@ import controller.ProjectController;
 import controller.TaskController;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import model.Project;
 import model.Task;
 import util.ButtonColumnCellRederer;
@@ -38,6 +41,7 @@ public class MainScreen extends javax.swing.JFrame {
         initComponentesModel();
         
         decorateTableTask();
+        centralizeMainScreen();
     }
 
     /**
@@ -313,7 +317,33 @@ public class MainScreen extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+     private void jLabelTasksToolBarAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTasksToolBarAddMouseClicked
+        // TODO add your handling code here:
+        int indexSeletecProject = jListProjects.getSelectedIndex();
+        if (indexSeletecProject != -1) {
+            TaskDialogScreen taskDialogScreen = new TaskDialogScreen(this, true);
 
+            Project project = (Project) projectsModel.get(jListProjects.getSelectedIndex());
+
+            taskDialogScreen.setProject(project);
+            taskDialogScreen.setVisible(true);
+
+            taskDialogScreen.addWindowListener(new WindowAdapter() {
+                public void windowClosed(WindowEvent e) {
+                    int projectIndex = jListProjects.getSelectedIndex();
+                    Project project = (Project) projectsModel.get(projectIndex);
+                    loadTask(project.getId());
+                }
+            });
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Voc? deve escolher um projeto para essa tarefa", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jLabelTasksToolBarAddMouseClicked
+     
+    
+     
+    
     private void jLabelProjectsAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelProjectsAddMouseClicked
         // TODO add your handling code here:
         
@@ -357,12 +387,16 @@ public class MainScreen extends javax.swing.JFrame {
         
         switch(columnIndex){
             case 3:
-                
-                taskController.update(task);
+                 taskController.update(task);
                 break;
             case 4:
+                 
+                JOptionPane.showMessageDialog(rootPane, "Editar a tarefa");
+              
                 break;
-            case 5:     
+
+            case 5:
+                JOptionPane.showMessageDialog(rootPane, "Excluir tarefa? ");
                 taskController.removeById(task.getId());
                 taskModel.getTasks().remove(task);
                 
@@ -439,6 +473,11 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JTable jTableTask;
     // End of variables declaration//GEN-END:variables
     
+    private void initDataAccessObjects() {
+        projectController = new ProjectController();
+        taskController = new TaskController();
+    }
+    
     public void decorateTableTask() {
         
         //Customizando o header da table de tarefas
@@ -447,7 +486,7 @@ public class MainScreen extends javax.swing.JFrame {
         jTableTask.getTableHeader().setForeground(new Color(255, 255, 255));
         
         //Criando um short automatico para a caluna da tabela 
-        //jTableTask.setAutoCreateRowSorter(true);
+        jTableTask.setAutoCreateRowSorter(true);
         
         jTableTask.getColumnModel().getColumn(2)
                 .setCellRenderer(new DeadlineColumnCellRenderer());
@@ -457,6 +496,22 @@ public class MainScreen extends javax.swing.JFrame {
         
         jTableTask.getColumnModel().getColumn(5).setCellRenderer(
                 new ButtonColumnCellRederer("delete"));
+        
+        //add event
+        jTableTask.addMouseListener(new java.awt.event.MouseAdapter() {
+           
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int rowIndex = jTableTask.rowAtPoint(evt.getPoint());
+                int columnIndex = jTableTask.columnAtPoint(evt.getPoint());
+
+                if (columnIndex == 4) {
+                    Task task = taskModel.getTasks().get(rowIndex);
+                    taskController.update(task);
+                    
+                }
+            }
+        });
     }
     
     public void initDataController(){
@@ -478,6 +533,12 @@ public class MainScreen extends javax.swing.JFrame {
             loadTask(project.getId());
             
         }
+    }
+    
+    private void centralizeMainScreen() {
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
     
     public void loadTask(int idProject){
@@ -526,7 +587,12 @@ public class MainScreen extends javax.swing.JFrame {
         
         jListProjects.setModel(projectsModel);
         
-    }             
+    }
     
+    private void setApplicationIcon() {
+        Image icon = Toolkit.getDefaultToolkit().getImage("C:\\Users\\inspect1\\Desktop\\L?gica de programa??o III\\Workspace\\TodoApp\\bin\\resources\\tick\\tick.png");
+        this.setIconImage(icon);
+    }
+
 }
 
