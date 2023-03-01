@@ -74,9 +74,9 @@ public class Main {
         
 //        taskController.removeById(1);
 
-        TaskController taskController = new TaskController();
-        List<Task> tasks = taskController.getAll(4);
-        System.out.println("Total de tarefas = " + tasks.size());
+//        TaskController taskController = new TaskController();
+//        List<Task> tasks = taskController.getAll(4);
+//        System.out.println("Total de tarefas = " + tasks.size());
 //        
     }
     

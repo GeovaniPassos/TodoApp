@@ -387,12 +387,19 @@ public class MainScreen extends javax.swing.JFrame {
         
         switch(columnIndex){
             case 3:
-                 taskController.update(task);
+                 
                 break;
             case 4:
-                 
-                JOptionPane.showMessageDialog(rootPane, "Editar a tarefa");
-              
+                
+                TaskDialogScreen taskDialogScreen = new TaskDialogScreen(this, rootPaneCheckingEnabled);
+                taskDialogScreen.setVisible(true);
+                taskController.update(task);
+                
+                    
+                    
+                    
+                //JOptionPane.showMessageDialog(rootPane, "Editar a tarefa");
+                
                 break;
 
             case 5:
